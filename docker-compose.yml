@@ -12,4 +12,4 @@ services:
     volumes:
       - eticket-reservation-volume:/var/lib/postgresql/data
 volumes:
-  reservation-volume:
+  eticket-reservation-volume:
