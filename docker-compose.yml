@@ -1,15 +1,30 @@
 version: '3'
 services:
+
   reservation-db:
     image: postgres:13.1
-    container_name: eticket-reservation-db
+    container_name: reservation-db
     environment:
-      POSTGRES_DB: eticket-reservation
+      POSTGRES_DB: reservation
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - "5441:5432"
     volumes:
-      - eticket-reservation-volume:/var/lib/postgresql/data
+      - reservation-volume:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1
+    container_name: keycloak
+    ports:
+      - "8888:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: [ "start-dev" ]
+    volumes:
+      - keycloak-data:/opt/jboss/keycloak/standalone/data
+
 volumes:
-  eticket-reservation-volume:
+  reservation-volume:
+  keycloak-data:

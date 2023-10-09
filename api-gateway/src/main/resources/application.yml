@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: reservation-service
+          uri: lb://reservation-service
+          predicates:
+            - Path=/v1/api/reservation/**
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8888/realms/e-ticket
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
